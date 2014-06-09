@@ -1,74 +1,15 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/nightlightContainer"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.nightlightdemo.NightlightActivity"
-    tools:ignore="MergeRootFrame" 
-    android:background="@color/background_color_2">
+    tools:context=".Main" >
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="50dp"
-            android:layout_marginTop="80dp"
-            android:src="@drawable/widgetstar" />
-        
-        <ImageView
-            android:id="@+id/imageView2"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="80dp"
-            android:layout_marginTop="50dp"
-            android:src="@drawable/widgetstar" />
-        
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="150dp"
-            android:layout_marginTop="100dp"
-            android:src="@drawable/widgetstar" />
-        
-        <ImageView
-            android:id="@+id/imageView4"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="250dp"
-            android:layout_marginTop="250dp"
-            android:src="@drawable/widgetstar" />
-        
-        <ImageView
-            android:id="@+id/imageView5"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="70dp"
-            android:layout_marginTop="300dp"
-            android:src="@drawable/widgetstar" />
-        
-        <ImageView
-            android:id="@+id/imageView6"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="120dp"
-            android:layout_marginTop="150dp"
-            android:src="@drawable/widgetstar" />
-        
-        <ImageView
-            android:id="@+id/imageView7"
-            android:contentDescription=""
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="140dp"
-            android:layout_marginTop="220dp"
-            android:src="@drawable/widgetstar" />
-
-    </FrameLayout>
-
-</FrameLayout>
-
+	<com.example.nightlightdemo.NightLightAnimation
+	    android:id = "@+id/nightlightAnimationView"
+	    android:layout_width="fill_parent"
+	    android:layout_height="fill_parent"
+	    								/>
+	
+	
+</LinearLayout>
+	

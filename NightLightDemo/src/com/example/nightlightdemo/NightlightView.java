@@ -1,6 +1,7 @@
 package com.example.nightlightdemo;
 
 import android.animation.ArgbEvaluator;
+import android.animation.ObjectAnimator;
 import android.animation.ValueAnimator;
 import android.content.Context;
 import android.graphics.Canvas;
@@ -10,31 +11,36 @@ import android.view.View;
 
 public class NightlightView extends View{
 
+	private final int color1 = getResources().getColor(R.color.background_color_2);
+	private final int color2 = getResources().getColor(R.color.background_color_3);
+	private final int color3 = getResources().getColor(R.color.background_color_4);
+	//private final int color4 = getResources().getColor(R.color.background_color_5);
+	
+	private boolean changeBackground = true;
+	
 	public NightlightView(Context context) {
 		super(context);
-		setBackgroundColor(getResources().getColor(R.color.menu_background));
+		
 		initBackground();
 	}
 	
+	
+	
+	
+	
 	public void initBackground (){
 		
-		int colorFrom = getResources().getColor(R.color.menu_background);
-		int colorTo = getResources().getColor(R.color.background_color_2);
-		
-		ValueAnimator bgChange = ValueAnimator.ofObject(new ArgbEvaluator(), colorFrom, colorTo);
-		bgChange.setDuration(3000);
-		
-		bgChange.addUpdateListener(new ValueAnimator.AnimatorUpdateListener(){
-			
-			@Override
-			public void onAnimationUpdate(ValueAnimator animation) {
-				setBackgroundColor((Integer)animation.getAnimatedValue());				
-			}
-		});
-		
+		ValueAnimator colorAnimator = ObjectAnimator.ofInt(this, "backgroundColor", color1, color2);
+		colorAnimator.setDuration(3000);
+		colorAnimator.setEvaluator(new ArgbEvaluator());
+		colorAnimator.setRepeatCount(ValueAnimator.INFINITE);
+		colorAnimator.setRepeatMode(ValueAnimator.REVERSE);
+		colorAnimator.start();	
 	}
 	
 	
+	
+	/*
 	@Override
 	protected void onDraw (Canvas canvas){
 		super.onDraw(canvas);
@@ -43,7 +49,7 @@ public class NightlightView extends View{
 		
 		
 		
-	}
+	}*/
 	
 	
 }

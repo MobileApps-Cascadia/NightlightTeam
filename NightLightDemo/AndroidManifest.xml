@@ -10,11 +10,11 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/ic_launcher"
+        android:icon="@drawable/icon72x72"
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.nightlightdemo.MainActivity"
+            android:name="com.example.nightlightdemo.SplashActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,12 +23,20 @@
             </intent-filter>
         </activity>
         <activity
+            android:name="com.example.nightlightdemo.MainActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="com.example.nightlightdemo.SettingsActivity"
             android:label="@string/title_activity_settings" >
         </activity>
         <activity
             android:name="com.example.nightlightdemo.NightlightActivity"
             android:label="@string/title_activity_nightlight" >
+        </activity>
+        <activity
+            android:name="com.example.nightlightdemo.PlayActivity"
+            android:label="@string/title_activity_play" >
         </activity>
     </application>
 

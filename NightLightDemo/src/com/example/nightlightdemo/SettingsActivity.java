@@ -3,7 +3,9 @@ package com.example.nightlightdemo;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.ActionBar;
 import android.support.v4.app.Fragment;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -11,7 +13,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.SeekBar;
+import android.widget.Switch;
 import android.widget.TextView;
 import android.os.Build;
 
@@ -22,9 +27,13 @@ public class SettingsActivity extends ActionBarActivity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_settings);
 
+		initSettings();
+		
 		initTimerBar();
 		initSpeedBar();
-		initBrightnessBar();
+		initLullabySwitch();
+		initFaeriesSwitch();
+	
 		initHomeButton();
 	}
 
@@ -36,11 +45,47 @@ public class SettingsActivity extends ActionBarActivity {
 		return true;
 	}
 	
+	//for saving settings to Shared Preferences
+	private void initSettings(){
+		int timer= getSharedPreferences("MySettingsPreferences", Context.MODE_PRIVATE).getInt("timerBar", 90);
+		int speed= getSharedPreferences("MySettingsPreferences", Context.MODE_PRIVATE).getInt("speedBar", 50);
+		String lullaby= getSharedPreferences("MySettingsPreferences", Context.MODE_PRIVATE).getString("lulswitch", "true");
+		String faeries= getSharedPreferences("MySettingsPreferences", Context.MODE_PRIVATE).getString("faeriesSwitch", "true");
+		
+		SeekBar timerBar = (SeekBar) findViewById(R.id.seekBarTimer);
+		SeekBar speedBar = (SeekBar) findViewById(R.id.seekBarGameSpeed);
+		Switch lulswitch = (Switch) findViewById(R.id.switchLullaby);
+		Switch faeriesSwitch = (Switch) findViewById(R.id.switchfaeries);
+		
+		
+		timerBar.setProgress(timer);
+		
+		speedBar.setProgress(speed);
+		
+		if (lullaby.equals("true")){
+			lulswitch.setChecked(true);
+		}
+		else{
+			lulswitch.setChecked(false);
+		}
+		
+		if (faeries.equals("true")){
+			faeriesSwitch.setChecked(true);
+		}
+		else{
+			faeriesSwitch.setChecked(false);
+		}
+		
+		
+		
+	}
+	
+	
 	public void initTimerBar() {
 		SeekBar timerBar = (SeekBar) findViewById(R.id.seekBarTimer);
-		timerBar.setMax(180);
-		timerBar.incrementProgressBy(5);
-		timerBar.setProgress(90);
+		timerBar.setMax(100);
+		//timerBar.incrementProgressBy(15);
+		//timerBar.setProgress(90);
 		
 		final TextView timerText = (TextView) findViewById(R.id.textTimer);
 		timerText.setText("Time: " + timerBar.getProgress() + " minutes");
@@ -51,11 +96,13 @@ public class SettingsActivity extends ActionBarActivity {
 			public void onStopTrackingTouch(SeekBar seekBar) {}
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {}
-			
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				timerText.setText("Time: " + progress + " minutes");			
+				timerText.setText("Time: " + progress + " minutes");	
+				
+				getSharedPreferences("MySettingsPreferences", MODE_PRIVATE).edit().putInt("timerBar", progress).commit();
+				
 			}
 		});
 	}
@@ -64,8 +111,8 @@ public class SettingsActivity extends ActionBarActivity {
 		
 		SeekBar speedBar = (SeekBar) findViewById(R.id.seekBarGameSpeed);
 		speedBar.setMax(100);
-		speedBar.incrementProgressBy(1);
-		speedBar.setProgress(50);
+		//speedBar.incrementProgressBy(1);
+		//speedBar.setProgress(50);
 		
 		final TextView speedText = (TextView) findViewById(R.id.textViewGameSpeed);
 		speedText.setText("Speed: " + speedBar.getProgress() + "%");
@@ -74,43 +121,62 @@ public class SettingsActivity extends ActionBarActivity {
 			
 			@Override
 			public void onStopTrackingTouch(SeekBar seekBar) {}
-			
 			@Override
 			public void onStartTrackingTouch(SeekBar seekBar) {}
-			
 			@Override
 			public void onProgressChanged(SeekBar seekBar, int progress,
 					boolean fromUser) {
-				speedText.setText("Speed: " + progress + "%");			
+				speedText.setText("Speed: " + progress + "%");	
+				
+				getSharedPreferences("MySettingsPreferences", MODE_PRIVATE).edit().putInt("speedBar", progress).commit();
 			}
 		});	
 	}
 	
-	public void initBrightnessBar (){
+public void initLullabySwitch (){
 		
-		SeekBar brightnessBar = (SeekBar) findViewById(R.id.seekBarBrightness);
-		brightnessBar.setMax(100);
-		brightnessBar.incrementProgressBy(1);
-		brightnessBar.setProgress(50);
-		
-		final TextView brightnessText = (TextView) findViewById(R.id.textViewBrightness);
-		brightnessText.setText("Speed: " + brightnessBar.getProgress() + "%");
-		
-		brightnessBar.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
-			
+		Switch lulswitch = (Switch) findViewById(R.id.switchLullaby);
+		//lulswitch.setChecked(true);		
+		lulswitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
 			@Override
-			public void onStopTrackingTouch(SeekBar seekBar) {}
-			
-			@Override
-			public void onStartTrackingTouch(SeekBar seekBar) {}
-			
-			@Override
-			public void onProgressChanged(SeekBar seekBar, int progress,
-					boolean fromUser) {
-				brightnessText.setText("Speed: " + progress + "%");			
+			   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			 
+			    if(isChecked == true){
+			     //use lullaby
+			    	
+			    	getSharedPreferences("MySettingsPreferences", MODE_PRIVATE).edit().putString("lulswitch", "true").commit();
+			    }else{
+			     //use regular bump sounds-twinkle,laugh,pop
+			    	
+			    	getSharedPreferences("MySettingsPreferences", MODE_PRIVATE).edit().putString("lulswitch", "false").commit();
+			    }
+			 
 			}
-		});	
+		});
 	}
+
+	public void initFaeriesSwitch (){
+
+		Switch faeriesSwitch = (Switch) findViewById(R.id.switchfaeries);
+		//faeriesSwitch.setChecked(true);		
+		faeriesSwitch.setOnCheckedChangeListener(new Switch.OnCheckedChangeListener(){
+			@Override
+			   public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+			 
+			    if(isChecked == true){
+			     //use faeries
+			    	
+			    	getSharedPreferences("MySettingsPreferences", MODE_PRIVATE).edit().putString("faeriesSwitch", "true").commit();	
+			    }else{
+			     //use stars only?
+			    	
+			    	getSharedPreferences("MySettingsPreferences", MODE_PRIVATE).edit().putString("faeriesSwitch", "false").commit();	
+			    }
+					
+			}
+		});
+	}
+	
 	
 	public void initHomeButton(){
 		

@@ -1,27 +1,44 @@
 package com.example.nightlightdemo;
 
 import android.app.Activity;
-import android.app.ActionBar;
-import android.app.Fragment;
+import android.content.Context;
+import android.media.MediaPlayer;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
-import android.os.Build;
+
 
 public class NightlightActivity extends Activity {
 
-	ImageView[] stars = new ImageView [10];
-	
+	NightLightAnimation nightlightView; //holds the view
+
+	private MediaPlayer player; //holds background music
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		//sets contect view to this activity, which holds an instance of
+		//nightlightview
 		setContentView(R.layout.activity_nightlight);
+		//this will be how settings will be accessed/passed
+		nightlightView = (NightLightAnimation)
+				findViewById(R.id.nightlightAnimationView);	
+		//returns shared preferences for faeries
+		String faeries = getSharedPreferences("MySettingsPreferences", 
+				Context.MODE_PRIVATE).getString("faeriesSwitch", "true");
+		nightlightView.setFairyPreference(faeries.equals("true"));
+
+		//returns shared preferences for lullaby
+		String lullaby= getSharedPreferences("MySettingsPreferences", 
+				Context.MODE_PRIVATE).getString("lulswitch", "true");
 		
+		player = new MediaPlayer();//creates media player
+		player = MediaPlayer.create(this, R.raw.musicbox); //adds background lullaby
+		player.setVolume(0.8f, 0.8f); //sets volume for background music
+		player.setLooping(true); //sets lullaby to loop
+		//if lullaby is switched to 'true', music will play
+		if (lullaby.equals("true")){		
+			player.start(); //starts player
+		}
 	}
 
 	@Override
@@ -31,23 +48,14 @@ public class NightlightActivity extends Activity {
 		getMenuInflater().inflate(R.menu.nightlight, menu);
 		return true;
 	}
-	//never called
-	/*
-	public void initStars(){
-		//RelativeLayout starLayout = (RelativeLayout) findViewById(R.id.widgetContainer);
-	
-		for (int i = 0; i < 10; i++){
-			stars[i] = new ImageView(this);
-			int x = (int)(Math.random() * starLayout.getWidth());
-			int y = (int)(Math.random() * starLayout.getHeight());
-			RelativeLayout.LayoutParams params = new RelativeLayout.LayoutParams(40, 40);
-			params.topMargin = y;
-			params.leftMargin = x;		
-			
-			this.addContentView(stars[i], params);
-			
-		}
-		
-	}*/
+	@Override
+	/**
+	 * Restarts the activity and stops music, on activity pause
+	 */
+	public void onPause(){
+		super.onPause();
+		player.stop(); //stops player
+		nightlightView.pause(); //stops all handlers
+	}
 
 }

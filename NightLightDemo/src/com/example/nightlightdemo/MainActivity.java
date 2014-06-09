@@ -20,11 +20,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        initNightlightButton(); //todo
-        initPlayButton(); //todo
-        initSettingButton(); //should work
-        
-
+        initNightlightButton(); 
+        initPlayButton(); 
+        initSettingButton();
     }
 
     @Override
@@ -36,7 +34,17 @@ public class MainActivity extends ActionBarActivity {
     }
     
     public void initNightlightButton(){
+    	Button nightlightButton = (Button) findViewById(R.id.buttonNightlight);
     	
+    	nightlightButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				Intent intent = new Intent (MainActivity.this, NightlightActivity.class);
+				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+				startActivity(intent);
+			}
+		});
     }
     
     public void initSettingButton(){
@@ -54,13 +62,13 @@ public class MainActivity extends ActionBarActivity {
     }
     
     public void initPlayButton (){
-    	Button nightlightButton = (Button) findViewById(R.id.buttonNightlight);
+    	Button playButton = (Button) findViewById(R.id.buttonPlay);
     	
-    	nightlightButton.setOnClickListener(new View.OnClickListener() {
+    	playButton.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
 			public void onClick(View v) {
-				Intent intent = new Intent (MainActivity.this, NightlightActivity.class);
+				Intent intent = new Intent (MainActivity.this, PlayActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(intent);
 			}
