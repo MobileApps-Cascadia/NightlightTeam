@@ -22,10 +22,6 @@ public class NightlightActivity extends Activity {
 		//this will be how settings will be accessed/passed
 		nightlightView = (NightLightAnimation)
 				findViewById(R.id.nightlightAnimationView);	
-		//returns shared preferences for faeries
-		String faeries = getSharedPreferences("MySettingsPreferences", 
-				Context.MODE_PRIVATE).getString("faeriesSwitch", "true");
-		nightlightView.setFairyPreference(faeries.equals("true"));
 
 		//returns shared preferences for lullaby
 		String lullaby= getSharedPreferences("MySettingsPreferences", 

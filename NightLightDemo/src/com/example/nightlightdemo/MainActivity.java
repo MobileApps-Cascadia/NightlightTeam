@@ -20,9 +20,9 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         
-        initNightlightButton(); 
-        initPlayButton(); 
-        initSettingButton();
+        initNightlightButton(); //init nightlight button
+        initPlayButton();  //init play button
+        initSettingButton(); //init setting button
     }
 
     @Override
@@ -33,6 +33,9 @@ public class MainActivity extends ActionBarActivity {
         return true;
     }
     
+    /**
+     * sets onclick and intent listeners for nightlight button
+     */
     public void initNightlightButton(){
     	Button nightlightButton = (Button) findViewById(R.id.buttonNightlight);
     	
@@ -47,6 +50,9 @@ public class MainActivity extends ActionBarActivity {
 		});
     }
     
+    /**
+     * sets onclick and intent listeners for settings button
+     */
     public void initSettingButton(){
     	Button settingsButton = (Button) findViewById(R.id.buttonSettings);
     	
@@ -61,6 +67,9 @@ public class MainActivity extends ActionBarActivity {
 		});
     }
     
+    /**
+     * sets onclick and intent listeners for play button
+     */
     public void initPlayButton (){
     	Button playButton = (Button) findViewById(R.id.buttonPlay);
     	

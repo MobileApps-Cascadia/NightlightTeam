@@ -118,6 +118,10 @@ public class NightLightAnimation extends View {
 
 		randX = new Random();//init
 		randY = new Random();//init
+		//returns shared preferences for faeries
+		String faeries = context.getSharedPreferences("MySettingsPreferences", 
+				Context.MODE_PRIVATE).getString("faeriesSwitch", "true");
+		setFairyPreference(faeries.equals("true"));
 
 		initSounds(context);//init sounds
 		initFairyBitmaps();//adds fairy bitmaps from res folder to arraylists
